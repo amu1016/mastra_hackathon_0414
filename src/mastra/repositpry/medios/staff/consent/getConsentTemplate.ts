@@ -51,13 +51,14 @@ interface ConsentTemplatePlot {
 }
 
 export const getConsentTemplate = async (token: string, id: number) => {
-  const path = `https://doctor.contrea.net/api/v2/staff/consent/template/${id}`;
+  const idStr = id.toString();
+  const path = `https://doctor.contrea.net/api/v2/staff/consent/template/${idStr}`;
   const response = await fetch(path, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  const data = (await response.json()) as ConsentTemplate;
-  return data;
+  const res = (await response.json()) as { data: ConsentTemplate };
+  return res.data;
 };

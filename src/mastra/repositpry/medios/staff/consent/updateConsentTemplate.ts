@@ -1,4 +1,4 @@
-interface UpdateConsentTemplateInput {
+export interface UpdateConsentTemplateInput {
   name: string;
   fontSize: 16 | 24 | 32;
   description?: string;
@@ -39,3 +39,30 @@ interface UpdateConsentTemplateInput {
     target: "PATIENT" | "STAFF";
   }[];
 }
+
+export const updateConsentTemplate = async (
+  input: UpdateConsentTemplateInput,
+  id: number,
+  token: string
+) => {
+  const idStr = id.toString();
+  const path = `https://doctor.contrea.net/api/v2/staff/consent/template/${idStr}/updateConsentTemplate`;
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = await response.json();
+    if (!res.data) {
+      throw new Error("同意書の更新に失敗しました");
+    }
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("同意書の更新に失敗しました");
+  }
+};
