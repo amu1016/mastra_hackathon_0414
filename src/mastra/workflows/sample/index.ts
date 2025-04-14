@@ -1,7 +1,7 @@
 import { Agent } from "@mastra/core/agent";
 import { Step, Workflow } from "@mastra/core/workflows";
 import { z } from "zod";
-import { google } from "../models";
+import { google } from "../../models";
 
 const gemini = google("gemini-2.0-flash-001");
 
